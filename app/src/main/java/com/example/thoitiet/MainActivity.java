@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     Calendar cal;
     AdapterThoiTiet adapterThoiTiet ;
     List<ContectThoiTiet> contectThoiTiets;
+    List<ContectThoiTiet> contectThoiTietsHienThi;
     boolean check =true;
 Handler handler = new Handler();
     @Override
@@ -65,13 +66,6 @@ Handler handler = new Handler();
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 1, this);
@@ -109,9 +103,10 @@ Handler handler = new Handler();
                 urlAPI="http://api.openweathermap.org/data/2.5/weather?q="+addresses.get(0).getLocality()+"&appid=298def9ce8d941741e4134b34b2685c3";
                 urlAPI1="http://api.openweathermap.org/data/2.5/forecast?q="+addresses.get(0).getLocality()+"&appid=298def9ce8d941741e4134b34b2685c3";
                 contectThoiTiets=new ArrayList<>();
+                contectThoiTietsHienThi = new ArrayList<>();
                 new DogetData(urlAPI).execute();
                 new DogetData1(urlAPI1).execute();
-                adapterThoiTiet= new AdapterThoiTiet(contectThoiTiets);
+                adapterThoiTiet= new AdapterThoiTiet(contectThoiTietsHienThi);
             }
         } catch (IOException ex) {
 
@@ -193,6 +188,12 @@ Handler handler = new Handler();
                         JSONArray jsonArray1 = jsonObject1.getJSONArray("weather");
                         JSONObject object2 = jsonArray1.getJSONObject(0);
                         JSONObject jsonObject2 = jsonObject1.getJSONObject("main");
+
+                        DateFormat formatDate=new SimpleDateFormat("EEEE");
+
+
+                        contectThoiTiet = new ContectThoiTiet(object2.getString("main"),nhietDo(jsonObject2.getString("temp_max")),nhietDo(jsonObject2.getString("temp_min")),formatDate.format(date));
+                        contectThoiTietsHienThi.add(contectThoiTiet);
                         contectThoiTiet = new ContectThoiTiet(object2.getString("main"),nhietDo(jsonObject2.getString("temp_max")),nhietDo(jsonObject2.getString("temp_min")),dateToString(date));
                         contectThoiTiets.add(contectThoiTiet);
 
