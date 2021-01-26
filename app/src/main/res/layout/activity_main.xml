@@ -4,28 +4,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/etTim"
+                    android:hint="Nhập địa điểm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp" />
+                <Button
+                    android:id="@+id/btnTim"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tìm"/>
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
         <TextView
             android:id="@+id/diaDiem"
+            android:layout_below="@+id/toolBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:textStyle="bold"
-
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"/>
         <TextView
             android:id="@+id/viTri"
             android:layout_below="@+id/diaDiem"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:textSize="25dp"/>
         <TextView
             android:id="@+id/tvTime"
-
+            android:layout_below="@+id/toolBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ABC"
@@ -33,18 +54,15 @@
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="15dp"
-            />
+            android:layout_marginTop="15dp" />
         <TextView
             android:id="@+id/tvDate"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTime"
             android:layout_centerHorizontal="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-
             android:textSize="15dp"/>
         <androidx.cardview.widget.CardView
             android:id="@+id/nhietDo"
@@ -60,9 +78,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/viencong"
-
-                android:layout_margin="15dp"
-                >
+                android:layout_margin="15dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

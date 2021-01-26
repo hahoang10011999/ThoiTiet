@@ -2,6 +2,7 @@ package com.example.thoitiet;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,6 +21,8 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.thoitiet.Adapter.AdapterThoiTiet;
 import com.example.thoitiet.Contexts.ContectThoiTiet;
@@ -57,12 +60,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     List<ContectThoiTiet> contectThoiTiets;
     List<ContectThoiTiet> contectThoiTietsHienThi;
     boolean check =true;
+
 Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        setSupportActionBar(binding.toolBar);
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -70,6 +74,19 @@ Handler handler = new Handler();
         }
         manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 1, this);
         startTimer();
+        binding.btnTim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String diaDiem = binding.etTim.getText().toString();
+                urlAPI="http://api.openweathermap.org/data/2.5/weather?q="+diaDiem+"&appid=298def9ce8d941741e4134b34b2685c3";
+                urlAPI1="http://api.openweathermap.org/data/2.5/forecast?q="+diaDiem+"&appid=298def9ce8d941741e4134b34b2685c3";
+                contectThoiTiets=new ArrayList<>();
+                contectThoiTietsHienThi = new ArrayList<>();
+                new DogetData(urlAPI).execute();
+                new DogetData1(urlAPI1).execute();
+                adapterThoiTiet= new AdapterThoiTiet(contectThoiTietsHienThi);
+            }
+        });
 
 
     }
